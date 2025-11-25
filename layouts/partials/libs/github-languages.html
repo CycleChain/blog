@@ -1,0 +1,43 @@
+{{/* Fetch GitHub language breakdown and render percentages. Optionally use site.Params.githubToken for higher rate limits. */}}
+{{ $repo := .repo }}
+{{ if not $repo }}{{- errorf "github-languages partial: missing repo" -}}{{ end }}
+{{ $token := site.Params.githubToken }}
+{{ $url := printf "https://api.github.com/repos/%s/languages" $repo }}
+{{ $opts := dict }}
+{{ if $token }}
+  {{ $opts = dict "headers" (dict "Authorization" (printf "Bearer %s" $token) "User-Agent" "hugo") }}
+{{ else }}
+  {{ $opts = dict "headers" (dict "User-Agent" "hugo") }}
+{{ end }}
+{{ $res := resources.GetRemote $url $opts }}
+{{ if not $res }}<p>Languages: n/a</p>{{ else }}
+  {{ $json := transform.Unmarshal $res.Content }}
+  {{ $total := 0 }}
+  {{ range $k, $v := $json }}{{ $total = add $total $v }}{{ end }}
+  {{ if le $total 0 }}<p>Languages: n/a</p>{{ else }}
+    {{/* map GitHub language names to Devicon slugs */}}
+    {{ $map := dict
+      "python" "python" "shell" "bash" "rust" "rust" "go" "go"
+      "javascript" "javascript" "typescript" "typescript" "php" "php"
+      "java" "java" "c" "c" "c++" "cplusplus" "c#" "csharp"
+      "ruby" "ruby" "kotlin" "kotlin" "swift" "swift"
+      "dart" "dart" "scala" "scala" "haskell" "haskell"
+      "elixir" "elixir" "erlang" "erlang" "r" "r" "perl" "perl"
+    }}
+    <div class="lib-langs-flex">
+      {{ range $k, $v := $json }}
+        {{ $pct := div (mul (float $v) 100.0) (float $total) }}
+        {{ $slug := index $map (lower $k) }}
+        <div class="lib-lang">
+          {{ if $slug }}
+            <i class="devicon-{{ $slug }}-plain " title="{{ $k }}"></i>
+          {{ else }}
+            <span class="lib-lang-text">{{ $k }}</span>
+          {{ end }}
+          <span class="lib-lang-pct">{{ printf "%.1f%%" $pct }}</span>
+        </div>
+      {{ end }}
+    </div>
+  {{ end }}
+{{ end }}
+

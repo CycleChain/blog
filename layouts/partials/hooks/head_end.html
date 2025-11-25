@@ -1,0 +1,65 @@
+{{/* Hreflang alternates */}}
+{{- range .AllTranslations -}}
+<link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>
+{{- end -}}
+{{- with site.Home -}}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}"/>
+{{- end -}}
+
+{{/* Devicon CSS for language icons */}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"/>
+
+{{/* Site-wide Organization and WebSite JSON-LD */}}
+{{- $org := site.Params.organization -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ (or $org.name site.Title) | jsonify }},
+  "url": {{ (or $org.url site.BaseURL) | jsonify }},
+  {{- with $org.logo }}"logo": {{ . | absURL | jsonify }},{{ end }}
+  "sameAs": []
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ site.Title | jsonify }},
+  "url": {{ site.BaseURL | jsonify }}
+}
+</script>
+
+{{/* Article JSON-LD for posts */}}
+{{- if and .IsPage (eq .Section "posts") -}}
+{{- $img := "" -}}
+{{- with .Params.images }}{{ $img = (index . 0) }}{{ end -}}
+{{- if not $img }}{{ with .Params.image }}{{ $img = . }}{{ end }}{{ end -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ .Permalink | jsonify }}
+  },
+  "headline": {{ .Title | jsonify }},
+  {{- with .Params.description }}"description": {{ . | jsonify }},{{ end }}
+  {{- if $img }}"image": [ {{ (absURL $img) | jsonify }} ],{{ end }}
+  "datePublished": {{ .Date | time.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+  "dateModified": {{ .Lastmod | time.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+  "inLanguage": {{ .Lang | jsonify }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ (or $org.name site.Title) | jsonify }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ (or $org.name site.Title) | jsonify }}{{ with $org.logo }},
+    "logo": {"@type": "ImageObject", "url": {{ (absURL .) | jsonify }}} {{ end }}
+  }
+}
+</script>
+{{- end -}}
+
+

@@ -1,0 +1,46 @@
+{{/* Renders list of projects configured under site.Params.projects.items */}}
+{{ $items := site.Params.projects.items }}
+{{ if not $items }}<p>{{ cond (eq .Page.Lang "tr") "Henüz proje eklenmedi." "No projects added yet." }}</p>{{ end }}
+<div class="lib-list project-list">
+  {{ range $items }}
+  <section class="lib-item">
+    <h3 style="display:flex;gap:8px;align-items:center;justify-content:space-between;">
+      <span style="display:flex;gap:8px;align-items:center;">
+        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+        {{ with .status }}<span class="project-status" style="font-size:0.85rem;padding:2px 8px;border-radius:999px;border:1px solid currentColor;opacity:0.75;">{{ . }}</span>{{ end }}
+      </span>
+    </h3>
+    {{ $desc := "" }}
+    {{ with .descriptions }}
+      {{ $desc = index . $.Page.Lang }}
+      {{ if not $desc }}
+        {{ $desc = index . "en" }}
+      {{ end }}
+    {{ end }}
+    {{ if $desc }}<p>{{ $desc }}</p>{{ end }}
+    {{ with .highlights }}
+      {{ $list := index . $.Page.Lang }}
+      {{ if not $list }}
+        {{ $list = index . "en" }}
+      {{ end }}
+      {{ if $list }}
+      <ul class="project-highlights">
+        {{ range $list }}
+        <li>{{ . }}</li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    {{ end }}
+    {{ with .stack }}
+      <p class="project-stack"><strong>{{ cond (eq $.Page.Lang "tr") "Teknolojiler" "Tech stack" }}:</strong> {{ delimit . ", " }}</p>
+    {{ end }}
+    {{ with .series }}
+      {{ $seriesURL := relLangURL (printf "/series/%s/" .) }}
+      <p class="project-series-link">
+        <a href="{{ $seriesURL }}">{{ cond (eq $.Page.Lang "tr") "Seri yazılarını oku" "Follow the build series" }}</a>
+      </p>
+    {{ end }}
+  </section>
+  {{ end }}
+</div>
+

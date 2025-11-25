@@ -1,0 +1,19 @@
+{{/* Fetch latest tag name from GitHub */}}
+{{ $repo := .repo }}
+{{ if not $repo }}{{- errorf "github-latest-tag: missing repo" -}}{{ end }}
+{{ $token := site.Params.githubToken }}
+{{ $url := printf "https://api.github.com/repos/%s/tags" $repo }}
+{{ $opts := dict "headers" (dict "User-Agent" "hugo") }}
+{{ if $token }}
+  {{ $opts = dict "headers" (dict "Authorization" (printf "Bearer %s" $token) "User-Agent" "hugo") }}
+{{ end }}
+{{ $res := resources.GetRemote $url $opts }}
+{{ if $res }}
+  {{ $arr := transform.Unmarshal $res }}
+  {{ if and $arr (gt (len $arr) 0) }}
+    {{ $tag := index $arr 0 }}
+    {{ $name := index $tag "name" }}
+    {{ with $name }}<span class="lib-version">{{ . }}</span>{{ end }}
+  {{ end }}
+{{ end }}
+

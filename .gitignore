@@ -1,0 +1,58 @@
+# Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Hugo binaries
+hugo.exe
+hugo.linux
+hugo.darwin
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Editor and IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if using npm for themes/tools)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Python (if used for build scripts)
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Logs
+*.log
+
+# Build artifacts
+dist/
+
+# Misc
+.qodo
+
+# Local Hugo config (for secrets like tokens)
+hugo.local.toml

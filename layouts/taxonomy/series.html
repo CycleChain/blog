@@ -1,0 +1,39 @@
+{{ define "main" }}
+<div class="list-container series-term-page">
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ or .Params.title .Title }}</h1>
+  {{ with .Content }}
+    <div class="series-term-summary">
+      {{ . }}
+    </div>
+  {{ end }}
+  {{ $pages := where .Pages "Lang" .Lang }}
+  {{ if not (gt (len $pages) 0) }}
+    {{ $pages = .Pages }}
+  {{ end }}
+  {{ $pages = sort $pages "Params.seriesPart" "asc" }}
+  {{ $partLabel := cond (eq .Lang "tr") "Bölüm" "Part" }}
+  {{ if gt (len $pages) 0 }}
+  <ol class="series-term-list">
+    {{ range $index, $p := $pages }}
+      {{ $partNum := default (add $index 1) ($p.Param "seriesPart") }}
+      <li>
+        <div class="series-term-meta">
+          <span class="series-term-part">{{ $partLabel }} {{ $partNum }}</span>
+          <span class="series-term-date">{{ $p.Date | time.Format "2006-01-02" }}</span>
+        </div>
+        <p class="series-term-title">
+          <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+        </p>
+        {{ with $p.Params.description }}
+        <p class="series-term-desc">{{ . }}</p>
+        {{ end }}
+      </li>
+    {{ end }}
+  </ol>
+  {{ else }}
+    <p>{{ cond (eq .Lang "tr") "Bu seride henüz yazı yok." "No entries published for this series yet." }}</p>
+  {{ end }}
+</div>
+{{ end }}
+

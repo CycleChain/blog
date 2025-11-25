@@ -1,0 +1,26 @@
+items:
+  - name: "Sifteroxy"
+    repo: "CycleChain/sifteroxy"
+    url: "https://github.com/CycleChain/sifteroxy"
+    descriptions:
+      tr: "sift(er) + proxy — çalışan proxy'leri atomik olarak getir, ele, doğrula ve yayınla."
+      en: "sift(er) + proxy — fetch, sift, verify, and publish working proxies atomically."
+  - name: "Ignix"
+    repo: "CycleChain/ignix"
+    url: "https://github.com/CycleChain/ignix"
+    descriptions:
+      tr: "Rust ile yazılmış basit bellek içi KV (mini Redis)."
+      en: "simple kv stores for RAM (minimal redis) written in Rust"
+    install:
+      tr: "cargo install ignix"
+      en: "cargo install ignix"
+  - name: "Sandboxer"
+    repo: "CycleChain/sandboxer"
+    url: "https://github.com/CycleChain/sandboxer"
+    descriptions:
+      tr: "Tam veri izolasyonu için sıfır değişiklikli Laravel sanal alan paketi"
+      en: "Zero-modification Laravel sandbox package for complete data isolation"
+    install:
+      tr: "composer require cyclechain/sandboxerlatest"
+      en: "composer require cyclechain/sandboxerlatest"
+

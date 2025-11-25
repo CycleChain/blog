@@ -1,0 +1,21 @@
+{{/* Fetch last commit date (UTC) from GitHub */}}
+{{ $repo := .repo }}
+{{ if not $repo }}{{- errorf "github-last-commit: missing repo" -}}{{ end }}
+{{ $token := site.Params.githubToken }}
+{{ $url := printf "https://api.github.com/repos/%s/commits?per_page=1" $repo }}
+{{ $opts := dict "headers" (dict "User-Agent" "hugo") }}
+{{ if $token }}
+  {{ $opts = dict "headers" (dict "Authorization" (printf "Bearer %s" $token) "User-Agent" "hugo") }}
+{{ end }}
+{{ $res := resources.GetRemote $url $opts }}
+{{ if $res }}
+  {{ $arr := transform.Unmarshal $res }}
+  {{ if and $arr (gt (len $arr) 0) }}
+    {{ $c := index $arr 0 }}
+    {{ $commit := index $c "commit" }}
+    {{ $author := index $commit "author" }}
+    {{ $date := index $author "date" }}
+    {{ with $date }}<span class="lib-updated">{{ time . | time.Format "2006-01-02" }}</span>{{ end }}
+  {{ end }}
+{{ end }}
+

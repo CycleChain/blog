@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="list-container series-terms-page">
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ cond (eq .Lang "tr") "Seriler" "Series" }}</h1>
+  {{ with .Content }}
+    <div class="series-terms-summary">
+      {{ . }}
+    </div>
+  {{ end }}
+  {{ if gt (len .Pages) 0 }}
+    <ul class="series-terms-list">
+      {{ range .Pages }}
+        <li>
+          <a href="{{ .RelPermalink }}">
+            <strong>{{ or .Params.title .Title }}</strong>
+            <span class="series-terms-count">{{ len .Pages }} {{ cond (eq $.Lang "tr") "yazı" "posts" }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p>{{ cond (eq .Lang "tr") "Henüz seri tanımlı değil." "No series defined yet." }}</p>
+  {{ end }}
+</div>
+{{ end }}
+

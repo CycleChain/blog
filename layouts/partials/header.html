@@ -1,0 +1,49 @@
+{{/* Header override to add language switch with flag SVGs */}}
+
+<div class="header">
+
+    {{ if or (not (.Param "hideHeader")) .IsHome }}
+
+    <h1 class="header-title">
+        <a href="{{ site.BaseURL }}">{{ site.Title }}</a>
+    </h1>
+
+    <div class="header-menu" style="display:flex;gap:12px;align-items:center;">
+        {{ $currentPage := . }}
+
+        {{ with site.Params.menu }}
+        {{ range . }}
+
+        <p
+            class="small {{ if eq .name (lower $currentPage.Name) }} bold {{end}}">
+            <a href="{{ .url }}" {{ if and (isset . "newTab") .newTab
+                }}target="_blank" rel="noopener noreferrer" {{ end }}>
+                /{{.name }}
+            </a>
+        </p>
+        {{ end }}
+        {{ end }}
+
+        {{/* Language switch (other language flag) */}}
+        {{ $currentLang := .Lang }}
+        {{ $targetLang := cond (eq $currentLang "tr") "en" "tr" }}
+        {{ $alts := where .Translations "Lang" $targetLang }}
+        {{ $target := cond (gt (len $alts) 0) (index $alts 0) nil }}
+        {{ $href := cond (and $target (ne $target nil)) $target.RelPermalink (cond (eq $targetLang "en") "/en/" "/") }}
+
+        <a href="{{ $href }}" aria-label="switch-language" class="switch-language">
+            {{ if eq $targetLang "en" }}
+            {{/* US/UK simplified flag */}}
+            English
+            {{ else }}
+            {{/* Turkey flag */}}
+            Türkçe
+            {{ end }}
+        </a>
+    </div>
+
+    {{ end }}
+
+</div>
+
+

@@ -1,0 +1,111 @@
+baseURL = 'https://cyclechain.io/blog/'
+languageCode = 'tr-tr'
+title = 'Cyclechain Blog'
+theme = 'typo'
+
+enableRobotsTXT = true
+canonifyURLs = true
+defaultContentLanguage = 'tr'
+defaultContentLanguageInSubdir = false
+
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
+
+[pagination]
+  pagerSize = 10
+
+[permalinks]
+  posts = "/p/:slug/"
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+  series = 'series'
+
+[params]
+  description = 'Cyclechain ekibinden teknik yazılar, güncellemeler ve duyurular.'
+  [params.breadcrumbs]
+    enabled = true
+    home = '_'
+    showCurrentPage = true
+  showFooter = false
+
+  [params.social_links]
+    linkedin = 'https://www.linkedin.com/company/cyclechain/'
+    devto = 'https://dev.to/0xfd3495'
+  [params.projects]
+    [[params.projects.items]]
+      name = 'TenseHub'
+      url = 'https://tensehub.com'
+      status = 'Beta'
+      stack = ['Python', 'FastAPI']
+      [params.projects.items.descriptions]
+        tr = 'Basit İngilizce dil bilgisi dönüştürücüsü.'
+        en = 'Minimal grammar intelligence for tense and voice transformations.'
+      # [params.projects.items.highlights]
+      #   tr = ['Politika tabanlı erişim denetimi', 'Tamamen denetlenebilir iş akışı geçmişi']
+      #   en = ['Policy-based access control', 'Fully auditable workflow history']
+      # series = 'cyclechain-cloud'
+    # [[params.projects.items]]
+    #   name = 'Rollchain Explorer'
+    #   url = 'https://cyclechain.io/rollchain'
+    #   status = 'Live'
+    #   stack = ['Next.js', 'TypeScript', 'Edge DB']
+    #   [params.projects.items.descriptions]
+    #     tr = 'L2 rollup zincirlerinin durumunu ve performansını gerçek zamanlı izleyen keşif aracı.'
+    #     en = 'A realtime explorer for monitoring L2 rollup state and performance.'
+    #   [params.projects.items.highlights]
+    #     tr = ['Anomali uyarıları', 'Grafikli performans raporları']
+    #     en = ['Anomaly alerts', 'Charted performance reports']
+
+[languages]
+  [languages.tr]
+    languageName = 'Türkçe'
+    weight = 1
+    [languages.tr.params]
+      # Header menu (Typo theme reads site.Params.menu)
+      # Turkish URLs
+      [[languages.tr.params.menu]]
+        name = 'site'
+        url = 'https://cyclechain.io'
+        newTab = true
+      [[languages.tr.params.menu]]
+        name = 'p'
+        url = '/p/'
+      [[languages.tr.params.menu]]
+        name = 'hakkimizda'
+        url = '/hakkimizda/'
+      [[languages.tr.params.menu]]
+        name = 'lib'
+        url = '/lib/'
+      [[languages.tr.params.menu]]
+        name = 'projeler'
+        url = '/projeler/'
+  [languages.en]
+    languageName = 'English'
+    weight = 2
+    [languages.en.params]
+      # English URLs
+      [[languages.en.params.menu]]
+        name = 'site'
+        url = 'https://cyclechain.io'
+        newTab = true
+      [[languages.en.params.menu]]
+        name = 'p'
+        url = '/en/p/'
+      [[languages.en.params.menu]]
+        name = 'about'
+        url = '/en/about/'
+      [[languages.en.params.menu]]
+        name = 'lib'
+        url = '/en/lib/'
+      [[languages.en.params.menu]]
+        name = 'projects'
+        url = '/en/projects/'
+
+[params.organization]
+  name = 'Cyclechain'
+  url = 'https://cyclechain.io'
+  logo = '/images/logo.png'

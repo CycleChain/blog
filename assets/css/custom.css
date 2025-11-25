@@ -1,0 +1,73 @@
+:root {
+  --main-width: 992px;
+}
+
+.switch-language {
+  display: inline-flex;
+  margin-left: auto;
+  align-self: flex-start;
+}
+.switch-language svg { display: block; }
+
+.lib-langs-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+}
+.lib-lang { display: inline-flex; align-items: center; gap: 4px; }
+.lib-lang i { font-size: 24px; line-height: 1; }
+.lib-lang-pct { font-size: 14px; opacity: .85; }
+
+/* Lib list styling */
+.lib-list { display: grid; gap: 16px; }
+.lib-item { padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,.15); }
+.lib-item:last-child { border-bottom: 0; }
+.lib-version { font-size: 12px; opacity: .8; padding: 2px 6px; border: 1px solid rgba(0,0,0,.12); border-radius: 6px; }
+.lib-updated { font-size: 12px; font-style: italic; opacity: .7; }
+.lib-copy { background: transparent; border: 0; cursor: pointer; padding: 4px; color: inherit; }
+.lib-copy:hover { opacity: .8; }
+.lib-copy { position: relative; }
+.lib-copy .lib-icon { transition: opacity .2s ease; }
+.lib-copy .lib-icon.hide { opacity: 0; }
+.lib-copy .lib-copy-toast {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.85);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 1.2;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  opacity: 0;
+  transition: opacity .15s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+.lib-copy .lib-copy-toast::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0,0,0,.85);
+}
+.lib-copy .lib-copy-toast.show { opacity: 1; }
+
+/* Localize back-to-top text without overriding theme template */
+.back-to-top a { position: relative; font-size: 0; }
+.back-to-top a::after { font-size: 14px; }
+html:lang(tr) .back-to-top a::after { content: "başa dön"; }
+html:lang(en) .back-to-top a::after { content: "back to top"; }
+
+/* Social icons on home */
+.home-social { display: flex; gap: 10px; margin-top: 16px; }
+.home-social-link { color: inherit; opacity: .9; }
+.home-social-link:hover { opacity: 1; }
+
+

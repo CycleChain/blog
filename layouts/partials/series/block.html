@@ -1,0 +1,53 @@
+{{/* Renders a series index for the current post if it belongs to a series taxonomy. */}}
+{{ $terms := .GetTerms "series" }}
+{{ if gt (len $terms) 0 }}
+  <div class="series-block">
+    {{ range $terms }}
+      {{ $term := . }}
+      {{ $pages := where $term.Pages "Lang" $.Lang }}
+      {{ if not (gt (len $pages) 0) }}
+        {{ $pages = $term.Pages }}
+      {{ end }}
+      {{ $pages = sort $pages "Params.seriesPart" "asc" }}
+      {{ $partLabel := cond (eq $.Lang "tr") "Bölüm" "Part" }}
+      {{ $seriesLabel := cond (eq $.Lang "tr") "Yazı Serisi" "Series" }}
+      {{ if gt (len $pages) 0 }}
+      <section class="series-block__section">
+        <div class="series-block__header">
+          <p class="series-block__eyebrow">{{ $seriesLabel }}</p>
+          <h2 class="series-block__title">
+            <a href="{{ $term.RelPermalink }}">{{ or $term.Params.title $term.Title }}</a>
+          </h2>
+          {{ with $term.Params.summary }}
+          <p class="series-block__summary">{{ . }}</p>
+          {{ end }}
+        </div>
+        <ol class="series-block__list">
+          {{ range $index, $p := $pages }}
+            {{ $partNum := default (add $index 1) ($p.Param "seriesPart") }}
+            <li class="series-block__item {{ if eq $p.Permalink $.Permalink }}is-active{{ end }}">
+              <div class="series-block__item-header">
+                <span class="series-block__part">{{ $partLabel }} {{ $partNum }}</span>
+                <span class="series-block__item-date">{{ $p.Date | time.Format "2006-01-02" }}</span>
+              </div>
+              {{ if eq $p.Permalink $.Permalink }}
+                <p class="series-block__item-title">{{ $p.Title }}</p>
+              {{ else }}
+                <p class="series-block__item-title">
+                  <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+                </p>
+              {{ end }}
+            </li>
+          {{ end }}
+        </ol>
+        <div class="series-block__footer">
+          <a class="series-block__link" href="{{ $term.RelPermalink }}">
+            {{ cond (eq $.Lang "tr") "Tüm seriyi görüntüle" "View full series" }}
+          </a>
+        </div>
+      </section>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}
+
