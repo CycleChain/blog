@@ -1,0 +1,5 @@
+# Local configuration file for secrets
+# This file is gitignored and should never be committed
+
+[params]
+  githubToken = '<GITHUB_TOKEN>'
