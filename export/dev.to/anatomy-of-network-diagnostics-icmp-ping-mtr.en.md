@@ -18,8 +18,6 @@ images:
 ---
 
 
-{{< toc-accordion title="Table of Contents" >}}
-
 ## Introduction
 
 When we talk about the Internet, it's so important that saying "it's used like this, it's a must-have" would sound too simple. We'll take a look at how the magic behind the internet actually works. What's happening in the background when you visit a webpage, send a message, or watch a video?
@@ -433,143 +431,6 @@ rtt min/avg/max/mdev = 45.234/80.040/145.234/35.123 ms
 2. Use MTR to find which hop has the loss
 3. Contact ISP
 
-<!-- <HIDE_DEV_TO> -->
-{{< accordion title="🤖 Prompt Guide: Analyze Ping Output with AI" >}}
-
-A prompt you can use when sending this ping output to an AI assistant (ChatGPT, Claude etc.):
-
-```
-Analyze the output of this ping command and tell me:
-
-1. What is the connection status? (Healthy/Problematic/Critical)
-2. If there's packet loss, what could be the reason?
-3. Are RTT (latency) values normal?
-4. Is there a jitter (latency variability) problem?
-5. What steps should I take?
-
-Ping output:
-[Paste ping output here]
-```
-
-**Usage Tips:**
-- Copy the entire ping output (including statistics)
-- Add information about your network connection (WiFi/Ethernet/Mobile)
-- Mention when the problem started
-
-{{< /accordion >}}
-
-
-#### Example 3: High Latency
-```bash
-$ ping -c 5 australia-server.com
-
-PING australia-server.com (203.0.113.89) 56(84) bytes of data.
-64 bytes from 203.0.113.89: icmp_seq=1 ttl=48 time=287.3 ms
-64 bytes from 203.0.113.89: icmp_seq=2 ttl=48 time=289.1 ms
-64 bytes from 203.0.113.89: icmp_seq=3 ttl=48 time=288.5 ms
-64 bytes from 203.0.113.89: icmp_seq=4 ttl=48 time=287.9 ms
-64 bytes from 203.0.113.89: icmp_seq=5 ttl=48 time=288.2 ms
-
---- australia-server.com ping statistics ---
-5 packets transmitted, 5 received, 0% packet loss, time 4007ms
-rtt min/avg/max/mdev = 287.345/288.200/289.123/0.643 ms
-```
-
-**Analysis:**
-> ✅ 0% packet loss - Good \
-    ✅ Consistent latency (mdev=0.643ms) - Stable \
-    ⚠️ High RTT (~288ms) - Geographic distance
-
-**Result:** Normal situation - Distance effect from Turkey to Australia
-- Speed of light limit: Light travels ~40,000 km in ~133ms
-- Routing overhead, processing times etc.
-
-{{< accordion title="💡 Tip: Calculating Geographic Latency" >}}
-
-**Quick Calculation Formula:**
-
-```
-Distance (km) ÷ 200,000 = Minimum Latency (seconds)
-
-Examples:
-- Istanbul → London: 2,500 km → ~12.5 ms (theoretical)
-- Istanbul → Tokyo: 9,000 km → ~45 ms (theoretical)
-- Istanbul → New York: 8,000 km → ~40 ms (theoretical)
-```
-
-**Note:** Real latency is usually 2-3 times the theoretical value because:
-- Packets don't go in straight lines (routing)
-- Each router adds processing delay
-- Fiber optic is ~33% slower than light in vacuum
-
-{{< /accordion >}}
-
-#### Example 4: Host Unreachable
-```bash
-$ ping 192.168.1.250
-
-PING 192.168.1.250 (192.168.1.250) 56(84) bytes of data.
-From 192.168.1.1 icmp_seq=1 Destination Host Unreachable
-From 192.168.1.1 icmp_seq=2 Destination Host Unreachable
-From 192.168.1.1 icmp_seq=3 Destination Host Unreachable
-^C
---- 192.168.1.250 ping statistics ---
-3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2048ms
-```
-
-**Analysis:**
-> ❌ Gateway (192.168.1.1) returning "Destination Host Unreachable" \
-    ❌ 100% packet loss
-
-**Possible Causes:**
-- Host is down
-- Wrong IP address
-- Host is on different subnet
-- Firewall completely blocking ICMP
-
-#### Example 5: Request Timeout (Firewall)
-```bash
-$ ping 8.8.8.8
-
-PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-(silence... no response)
-^C
---- 8.8.8.8 ping statistics ---
-5 packets transmitted, 0 received, 100% packet loss, time 4096ms
-```
-
-**Analysis:**
-> ❌ No response at all (not even ICMP message) \
-    ❌ 100% loss but no "Unreachable" message either
-
-**Difference:** "Unreachable" vs "Timeout"
-- **Unreachable:** Router actively rejecting
-- **Timeout:** Silence - probably firewall dropping
-
-**Result:** Target or intermediate firewall silently dropping ICMP
-
-#### Example 6: Fragmentation Problem
-```bash
-$ ping -s 1500 -M do cloudflare.com
-
-PING cloudflare.com (104.16.132.229) 1500(1528) bytes of data.
-ping: local error: message too long, mtu=1500
-ping: local error: message too long, mtu=1500
-^C
-```
-
-**Analysis:**
-> ❌ Packet larger than MTU and fragmentation forbidden (-M do flag)
-
-**Solution:**
-```bash
-# Send in MTU-appropriate size
-$ ping -s 1472 -M do cloudflare.com
-PING cloudflare.com (104.16.132.229) 1472(1500) bytes of data.
-1480 bytes from 104.16.132.229: icmp_seq=1 ttl=58 time=8.23 ms
-```
-
-<!-- </HIDE_DEV_TO> -->
 
 ### Troubleshooting Strategy with Ping
 
@@ -697,26 +558,6 @@ Keys:  Help   Display mode   Restart statistics   Order of fields   quit
 | **Best** | Best (minimum) RTT |
 | **Wrst** | Worst (maximum) RTT |
 | **StDev** | Standard deviation (jitter indicator) |
-
-{{< accordion title="Simpler reporting" >}}
-```bash
-mtr --report -n -c 50 cyclechain.io | grep -v "Start" | awk 'NR==1 {next} {printf "%-20s \t Loss: %-6s \t Ping: %s ms\n", $2, $3, $6}'
-```
-
-```
-TARGET (HOST)                  LOSS       AVERAGE(ms)
-???                            100.0      0.0       
-10.68.131.192                  0.0%       1.4       
-138.197.249.56                 0.0%       0.6       
-143.244.192.116                0.0%       0.5       
-143.244.224.118                0.0%       0.7       
-143.244.224.115                4.0%       0.4       
-162.158.84.196                 0.0%       5.3       
-162.158.84.55                  0.0%       3.4       
-104.26.6.74                    0.0%       1.1
-```
-
-{{< /accordion >}}
 
 ### MTR Parameters
 
@@ -1045,7 +886,7 @@ Pinging is not just sending a packet and waiting for a response; it's being part
 
 When you monitor your network with MTR, you're actually observing the data flow over fiber optic cables stretching around the world, giant data centers, and countless routers.
 
-> I also published a longer, more detailed version (with extra examples) on my blog: [https://cyclechain.io/blog/p/anatomy-of-network-diagnostics-icmp-ping-mtr](https://cyclechain.io/blog/p/anatomy-of-network-diagnostics-icmp-ping-mtr "{blank} Live cyber attack map") - Deep Dive into the Internet: The Anatomy of Network Diagnostics with ICMP, Ping, and MTR
+> I also published a longer, more detailed version (with extra examples) on my blog: [https://cyclechain.io/blog/en/p/anatomy-of-network-diagnostics-icmp-ping-mtr/](https://cyclechain.io/blog/en/p/anatomy-of-network-diagnostics-icmp-ping-mtr/ "Deep Dive into the Internet: The Anatomy of Network Diagnostics with ICMP, Ping, and MTR") - Deep Dive into the Internet: The Anatomy of Network Diagnostics with ICMP, Ping, and MTR
 
 ---
 
