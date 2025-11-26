@@ -17,7 +17,7 @@ echo "🚀 Starting Hugo deployment..."
 
 # Build Hugo site
 echo "📦 Building Hugo site..."
-hugo --environment $HUGO_ENV --minify
+hugo --environment $HUGO_ENV --minify --buildFuture --buildDrafts -D
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ Hugo build failed!${NC}"
