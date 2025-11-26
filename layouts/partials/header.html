@@ -31,12 +31,14 @@
         {{ $target := cond (gt (len $alts) 0) (index $alts 0) nil }}
         {{ $href := cond (and $target (ne $target nil)) $target.RelPermalink (cond (eq $targetLang "en") "/en/" "/") }}
 
-        <a href="{{ $href }}" aria-label="switch-language" class="switch-language">
+        <a href="{{ $href }}"
+           aria-label="switch-language"
+           class="switch-language"
+           rel="alternate"
+           hreflang="{{ $targetLang }}">
             {{ if eq $targetLang "en" }}
-            {{/* US/UK simplified flag */}}
             English
             {{ else }}
-            {{/* Turkey flag */}}
             Türkçe
             {{ end }}
         </a>

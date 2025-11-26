@@ -1,0 +1,73 @@
+<details class="accordion-custom">
+  <summary class="accordion-title">{{ .Get "title" }}</summary>
+  <div class="accordion-content">
+    {{ .Inner | markdownify }}
+  </div>
+</details>
+
+<style>
+.accordion-custom {
+  margin: 1.5em 0;
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-background, rgb(30, 30, 30));
+}
+
+.accordion-title {
+  cursor: pointer;
+  padding: 1em 1.5em;
+  font-weight: 600;
+  font-size: 1.05em;
+  background: var(--background, rgb(20, 20, 20));
+  color: var(--content-primary, rgb(218, 218, 218));
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.accordion-title::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-title:before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.7em;
+  transition: transform 0.3s;
+  font-size: 0.8em;
+  color: var(--content-secondary, rgb(140, 140, 140));
+}
+
+details[open] .accordion-title:before {
+  transform: rotate(90deg);
+}
+
+.accordion-title:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-content {
+  padding: 1.5em;
+  background: var(--code-background, rgb(30, 30, 30));
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.accordion-content pre {
+  background: var(--background, rgb(20, 20, 20));
+  color: var(--content-primary, rgb(218, 218, 218));
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+  position: relative;
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+  margin: 0;
+}
+
+.accordion-content pre code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+</style>

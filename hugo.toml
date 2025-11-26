@@ -24,6 +24,12 @@ defaultContentLanguageInSubdir = false
   category = 'categories'
   series = 'series'
 
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
 [params]
   description = 'Cyclechain ekibinden teknik yazılar, güncellemeler ve duyurular.'
   [params.breadcrumbs]

@@ -58,7 +58,20 @@
         </div>
       {{- end }}
     {{- end }}
-    
+
+    {{- /* Hero Cover Image - Full Width */}}
+    {{- with .Params.cover.image }}
+    <div class="post-cover-image">
+      <img src="{{ . | relURL }}"
+          alt="{{ $.Params.cover.alt | default $.Title }}"
+          loading="eager"
+          fetchpriority="high" />
+      {{- with $.Params.cover.caption }}
+      <p class="cover-caption">{{ . | markdownify }}</p>
+      {{- end }}
+    </div>
+    {{- end }}
+
     {{- /* Table of Contents */}}
     
     {{- if .Param "toc" }}

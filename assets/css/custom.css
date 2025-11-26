@@ -70,4 +70,46 @@ html:lang(en) .back-to-top a::after { content: "back to top"; }
 .home-social-link { color: inherit; opacity: .9; }
 .home-social-link:hover { opacity: 1; }
 
+/* Full-width hero cover image */
+.post-cover-image {
+  width: 100%;
+}
+
+.post-cover-image img {
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.post-cover-image .cover-caption {
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+  font-style: italic;
+  padding: 0 1rem;
+}
+
+/* Dark mode support for cover caption */
+@media (prefers-color-scheme: dark) {
+  .post-cover-image .cover-caption {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Responsive adjustments for cover image */
+@media (max-width: 768px) {
+  .post-cover-image {
+    margin-top: 0;
+  }
+
+  .post-cover-image img {
+    max-height: 400px;
+  }
+}
+
 

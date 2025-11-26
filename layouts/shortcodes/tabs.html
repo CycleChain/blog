@@ -1,0 +1,114 @@
+{{ $id := .Get "id" | default (printf "tabs-%d" (now.UnixMilli)) }}
+<div class="tabs-container" data-tabs-id="{{ $id }}">
+  <div class="tabs-header">
+    {{ range $index, $item := split (.Get "titles") "|" }}
+    <button class="tab-button {{ if eq $index 0 }}active{{ end }}" data-tab="{{ $index }}">
+      {{ trim $item " " }}
+    </button>
+    {{ end }}
+  </div>
+  <div class="tabs-content">
+    {{ .Inner }}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('[data-tabs-id="{{ $id }}"]');
+    if (!container) return;
+
+    const buttons = container.querySelectorAll('.tab-button');
+    const panels = container.querySelectorAll('.tab-panel');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+
+        // Update buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Update panels
+        panels.forEach(panel => {
+          if (panel.getAttribute('data-tab') === targetTab) {
+            panel.classList.add('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+.tabs-container {
+  margin: 1.5em 0;
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-background, rgb(30, 30, 30));
+}
+
+.tabs-header {
+  display: flex;
+  background: var(--background, rgb(20, 20, 20));
+  border-bottom: 2px solid var(--code-border, rgb(50, 50, 50));
+  overflow-x: auto;
+}
+
+.tab-button {
+  padding: 1em 1.5em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95em;
+  color: var(--content-secondary, rgb(140, 140, 140));
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.tab-button.active {
+  color: var(--content-primary, rgb(218, 218, 218));
+  border-bottom-color: var(--content-primary, rgb(218, 218, 218));
+  background: var(--code-background, rgb(30, 30, 30));
+  font-weight: 600;
+}
+
+.tabs-content {
+  padding: 1.5em;
+  background: var(--code-background, rgb(30, 30, 30));
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.tab-panel pre {
+  background: var(--background, rgb(20, 20, 20));
+  color: var(--content-primary, rgb(218, 218, 218));
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin: 0;
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+}
+
+.tab-panel pre code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+</style>

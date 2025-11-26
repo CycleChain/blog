@@ -1,9 +1,23 @@
-{{/* Hreflang alternates */}}
+{{/* Hreflang alternates for SEO */}}
+{{/* Current page */}}
+<link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>
+
+{{/* All translations */}}
 {{- range .AllTranslations -}}
 <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>
 {{- end -}}
-{{- with site.Home -}}
+
+{{/* x-default should point to the default language (Turkish) */}}
+{{- if .IsTranslated -}}
+  {{- range .Translations -}}
+    {{- if eq .Lang "tr" -}}
 <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}"/>
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- if eq .Lang "tr" -}}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}"/>
+  {{- end -}}
 {{- end -}}
 
 {{/* Devicon CSS for language icons */}}

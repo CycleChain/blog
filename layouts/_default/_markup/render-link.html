@@ -1,0 +1,62 @@
+{{- $url := .Destination -}}
+{{- $text := .Text -}}
+{{- $title := .Title -}}
+{{- $isExternal := strings.HasPrefix $url "http" -}}
+
+{{- /* Başlıkta özel parametreler kontrol et */ -}}
+{{- $target := "" -}}
+{{- $rel := "" -}}
+{{- $cleanTitle := $title -}}
+
+{{- if $title -}}
+  {{- /* {blank} işaretini kontrol et */ -}}
+  {{- if in $title "{blank}" -}}
+    {{- $target = "_blank" -}}
+    {{- $cleanTitle = replace $title "{blank}" "" -}}
+  {{- end -}}
+
+  {{- /* {nofollow} işaretini kontrol et */ -}}
+  {{- if in $title "{nofollow}" -}}
+    {{- $rel = "nofollow" -}}
+    {{- $cleanTitle = replace $cleanTitle "{nofollow}" "" -}}
+  {{- end -}}
+
+  {{- /* {noopener} işaretini kontrol et */ -}}
+  {{- if in $title "{noopener}" -}}
+    {{- if $rel -}}
+      {{- $rel = printf "%s noopener" $rel -}}
+    {{- else -}}
+      {{- $rel = "noopener" -}}
+    {{- end -}}
+    {{- $cleanTitle = replace $cleanTitle "{noopener}" "" -}}
+  {{- end -}}
+
+  {{- /* {noreferrer} işaretini kontrol et */ -}}
+  {{- if in $title "{noreferrer}" -}}
+    {{- if $rel -}}
+      {{- $rel = printf "%s noreferrer" $rel -}}
+    {{- else -}}
+      {{- $rel = "noreferrer" -}}
+    {{- end -}}
+    {{- $cleanTitle = replace $cleanTitle "{noreferrer}" "" -}}
+  {{- end -}}
+
+  {{- $cleanTitle = trim $cleanTitle " " -}}
+{{- end -}}
+
+{{- /* Dış linkler için otomatik ayarlar */ -}}
+{{- if and $isExternal (not $target) -}}
+  {{- $target = "_blank" -}}
+{{- end -}}
+
+{{- if and $isExternal (not $rel) -}}
+  {{- $rel = "noopener noreferrer nofollow" -}}
+{{- end -}}
+
+<a href="{{ $url }}"
+   {{- with $cleanTitle }} title="{{ . }}"{{ end -}}
+   {{- with $target }} target="{{ . }}"{{ end -}}
+   {{- with $rel }} rel="{{ . }}"{{ end -}}
+>
+  {{- $text -}}
+</a>

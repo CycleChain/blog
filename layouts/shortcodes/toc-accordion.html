@@ -1,0 +1,125 @@
+{{- $title := .Get "title" | default "İçindekiler" -}}
+
+<details class="toc-accordion">
+  <summary class="toc-accordion-title">{{ $title }}</summary>
+  <nav class="toc-accordion-content">
+    {{ .Page.TableOfContents }}
+  </nav>
+</details>
+
+<style>
+.toc-accordion {
+  margin: 2em 0;
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--code-background, rgb(30, 30, 30));
+}
+
+.toc-accordion-title {
+  cursor: pointer;
+  padding: 1em 1.5em;
+  font-weight: 600;
+  font-size: 1.05em;
+  background: var(--background, rgb(20, 20, 20));
+  color: var(--content-primary, rgb(218, 218, 218));
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.toc-accordion-title::-webkit-details-marker {
+  display: none;
+}
+
+.toc-accordion-title:before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.7em;
+  transition: transform 0.3s;
+  font-size: 0.8em;
+  color: var(--content-secondary, rgb(140, 140, 140));
+}
+
+details[open] .toc-accordion-title:before {
+  transform: rotate(90deg);
+}
+
+.toc-accordion-title:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toc-accordion-content {
+  padding: 1.5em;
+  background: var(--code-background, rgb(30, 30, 30));
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.toc-accordion-content nav > ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc-accordion-content ul {
+  list-style: none;
+  margin: 0;
+}
+
+.toc-accordion-content nav > ul > li {
+  margin: 0.5em 0;
+}
+
+.toc-accordion-content li {
+  margin: 0.3em 0;
+}
+
+.toc-accordion-content ul ul {
+  padding-left: 1.5em;
+  margin-top: 0.3em;
+}
+
+.toc-accordion-content a {
+  color: var(--content-secondary, rgb(140, 140, 140));
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+  padding: 0.2em 0;
+}
+
+.toc-accordion-content a:hover {
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.toc-accordion-content nav > ul > li > a {
+  font-weight: 500;
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .toc-accordion {
+    margin: 1.5em 0;
+  }
+
+  .toc-accordion-title {
+    padding: 0.8em 1.2em;
+    font-size: 1em;
+  }
+
+  .toc-accordion-content {
+    padding: 1em;
+  }
+
+  .toc-accordion-content ul ul {
+    padding-left: 1em;
+  }
+}
+</style>

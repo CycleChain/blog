@@ -1,0 +1,108 @@
+{{- $title := .Get "title" | default "İçindekiler" -}}
+
+<div class="article-links table-of-contents">
+  <div class="toc-label">{{ $title }}</div>
+  <nav class="toc-nav">
+    {{ .Page.TableOfContents }}
+  </nav>
+</div>
+
+<style>
+.table-of-contents {
+  margin: 2em 0;
+  padding: 1.5em;
+  background: var(--code-background, rgb(30, 30, 30));
+  border: 1px solid var(--code-border, rgb(50, 50, 50));
+  border-radius: 8px;
+}
+
+.toc-label {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--content-primary, rgb(218, 218, 218));
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid var(--code-border, rgb(50, 50, 50));
+}
+
+.toc-nav {
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.toc-nav > nav > ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.toc-nav ul {
+  list-style: none;
+  margin: 0;
+}
+
+.toc-nav > nav > ul > li {
+  margin: 0.5em 0;
+}
+
+.toc-nav li {
+  margin: 0.3em 0;
+}
+
+.toc-nav ul ul {
+  padding-left: 1.5em;
+  margin-top: 0.3em;
+}
+
+.toc-nav a {
+  color: var(--content-secondary, rgb(140, 140, 140));
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-block;
+  padding: 0.2em 0;
+}
+
+.toc-nav a:hover {
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+.toc-nav > nav > ul > li > a {
+  font-weight: 500;
+  color: var(--content-primary, rgb(218, 218, 218));
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Add numbering */
+.toc-nav.numbered > nav > ul {
+  counter-reset: toc-counter;
+}
+
+.toc-nav.numbered > nav > ul > li {
+  counter-increment: toc-counter;
+}
+
+.toc-nav.numbered > nav > ul > li::before {
+  content: counter(toc-counter) ". ";
+  color: var(--content-secondary, rgb(140, 140, 140));
+  font-weight: 600;
+  margin-right: 0.3em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .table-of-contents {
+    padding: 1em;
+  }
+
+  .toc-label {
+    font-size: 1.1em;
+  }
+
+  .toc-nav ul ul {
+    padding-left: 1em;
+  }
+}
+</style>
