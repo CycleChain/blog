@@ -15,9 +15,19 @@ NC='\033[0m' # No Color
 
 echo "🚀 Starting Hugo deployment..."
 
+# Clean old builds and cache
+echo "🧹 Cleaning old builds and cache..."
+rm -rf public resources .hugo_build.lock
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✅ Cache cleared${NC}"
+else
+    echo -e "${RED}⚠️  Warning: Could not clear cache${NC}"
+fi
+
 # Build Hugo site
 echo "📦 Building Hugo site..."
-hugo --environment $HUGO_ENV --minify --buildFuture --buildDrafts -D
+hugo --environment $HUGO_ENV --minify --gc --cleanDestinationDir --buildFuture --buildDrafts -D
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ Hugo build failed!${NC}"
