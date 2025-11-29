@@ -27,7 +27,20 @@ fi
 
 # Build Hugo site
 echo "📦 Building Hugo site..."
-hugo --environment $HUGO_ENV --minify --gc --cleanDestinationDir --buildFuture --buildDrafts -D
+
+# Create temporary config with GitHub token if available
+HUGO_CONFIGS="hugo.toml"
+if [ ! -z "$GITHUB_TOKEN" ]; then
+    echo "[params]" > .hugo_temp.toml
+    echo "  githubToken = '$GITHUB_TOKEN'" >> .hugo_temp.toml
+    HUGO_CONFIGS="hugo.toml,.hugo_temp.toml"
+    echo "🔑 Using GitHub token for API access"
+fi
+
+hugo --config "$HUGO_CONFIGS" --environment $HUGO_ENV --minify --gc --cleanDestinationDir --buildFuture --buildDrafts -D
+
+# Clean up temporary config
+rm -f .hugo_temp.toml
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ Hugo build failed!${NC}"

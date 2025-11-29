@@ -56,3 +56,4 @@ dist/
 
 # Local Hugo config (for secrets like tokens)
 hugo.local.toml
+.hugo_temp.toml

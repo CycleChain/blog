@@ -32,6 +32,9 @@ defaultContentLanguageInSubdir = false
 
 [params]
   description = 'Cyclechain ekibinden teknik yazılar, güncellemeler ve duyurular.'
+  # GitHub token for API access
+  # IMPORTANT: Set this in hugo.local.toml (gitignored) for local development
+  # For production, it will be merged via --config flag in deploy.sh
   [params.breadcrumbs]
     enabled = true
     home = '_'
