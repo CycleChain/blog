@@ -46,13 +46,13 @@ defaultContentLanguageInSubdir = false
     devto = 'https://dev.to/0xfd3495'
   [params.projects]
     [[params.projects.items]]
-      name = 'TenseHub'
+      name = '<del>TenseHub</del>'
       url = 'https://tensehub.com'
-      status = 'Beta'
+      status = 'Offline'
       stack = ['Python', 'FastAPI']
       [params.projects.items.descriptions]
-        tr = 'Basit İngilizce dil bilgisi dönüştürücüsü.'
-        en = 'Minimal grammar intelligence for tense and voice transformations.'
+        tr = '<del>Basit İngilizce dil bilgisi dönüştürücüsü.</del> (Yayından kalktı)'
+        en = '<del>Minimal grammar intelligence for tense and voice transformations.</del> (Offline)'
       # [params.projects.items.highlights]
       #   tr = ['Politika tabanlı erişim denetimi', 'Tamamen denetlenebilir iş akışı geçmişi']
       #   en = ['Policy-based access control', 'Fully auditable workflow history']

@@ -1,0 +1,36 @@
+name: CI / Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive # Fetch themes if they are added as submodules
+          fetch-depth: 0        # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Create temporary config with GitHub token if needed by the theme/site
+          echo "[params]" > .hugo_temp.toml
+          echo "  githubToken = '${GITHUB_TOKEN}'" >> .hugo_temp.toml
+          
+          # Run Hugo build to test if the site compiles successfully
+          hugo --config "hugo.toml,.hugo_temp.toml" --minify --gc --cleanDestinationDir

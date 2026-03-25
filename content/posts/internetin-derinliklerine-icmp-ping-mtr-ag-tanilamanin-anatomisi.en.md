@@ -1,6 +1,7 @@
 ---
 title: "Deep Dive into the Internet: The Anatomy of Network Diagnostics with ICMP, Ping, and MTR"
 date: 2025-11-26T15:57:21Z
+author: "Fatih Mert Doğancan"
 draft: false
 description: "Master network diagnostics and troubleshooting. A comprehensive guide to understanding the anatomy of the internet using ICMP, Ping, and MTR tools for SysAdmins and DevOps."
 tags: ["networking","internet","icmp","ping","mtr","network-diagnostics","linux","sysadmin","devops","troubleshooting"]

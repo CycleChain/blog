@@ -6,7 +6,7 @@
   <section class="lib-item">
     <h3 style="display:flex;gap:8px;align-items:center;justify-content:space-between;">
       <span style="display:flex;gap:8px;align-items:center;">
-        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .name | safeHTML }}</a>
         {{ with .status }}<span class="project-status" style="font-size:0.85rem;padding:2px 8px;border-radius:999px;border:1px solid currentColor;opacity:0.75;">{{ . }}</span>{{ end }}
       </span>
     </h3>
@@ -17,7 +17,7 @@
         {{ $desc = index . "en" }}
       {{ end }}
     {{ end }}
-    {{ if $desc }}<p>{{ $desc }}</p>{{ end }}
+    {{ if $desc }}<p>{{ $desc | safeHTML }}</p>{{ end }}
     {{ with .highlights }}
       {{ $list := index . $.Page.Lang }}
       {{ if not $list }}
