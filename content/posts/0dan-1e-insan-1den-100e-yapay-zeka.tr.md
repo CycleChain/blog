@@ -8,12 +8,12 @@ tags: ["yapay-zeka","ai","yazılım-geliştirme","programlama","gelecek","teknol
 categories: ["yapay-zeka"]
 slug: "0dan-1e-insan-1den-100e-yapay-zeka"
 cover:
-  image: "images/0dan-1e-insan-1den-100e-yapay-zeka-yazilimin-yeni-paradigmasi-cover.webp"
+  image: "images/0dan-1e-insan-1den-100e-yapay-zeka.tr.webp"
   alt: "İnsan yaratıcılığı ve yapay zeka ölçeklendirmesini gösteren yazılım geliştirme illüstrasyonu"
   caption: "Yazılımın yeni paradigması: İnsan yaratıcılığı ve yapay zeka gücünün birleşimi (Gemini 3.0 ile oluşturuldu)"
   relative: false
 images:
-  - "images/0dan-1e-insan-1den-100e-yapay-zeka-yazilimin-yeni-paradigmasi-cover.webp"
+  - "images/0dan-1e-insan-1den-100e-yapay-zeka.tr.webp"
 
 ---
 

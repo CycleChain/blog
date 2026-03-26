@@ -8,12 +8,12 @@ tags: ["artificial-intelligence","ai","software-development","programming","futu
 categories: ["artificial-intelligence"]
 slug: "from-0-to-1-human-from-1-to-100-ai"
 cover:
-  image: "images/0dan-1e-insan-1den-100e-yapay-zeka-yazilimin-yeni-paradigmasi-cover.webp"
+  image: "images/0dan-1e-insan-1den-100e-yapay-zeka.webp"
   alt: "An illustration showing human creativity and AI scalability in software development."
   caption: "The New Paradigm of The Software Development: Power of Human Creativity and Articial Intelligence Mixing (Created by Gemini 3.0)"
   relative: false
 images:
-  - "images/0dan-1e-insan-1den-100e-yapay-zeka-yazilimin-yeni-paradigmasi-cover.webp"
+  - "images/0dan-1e-insan-1den-100e-yapay-zeka.webp"
 
 ---
 
